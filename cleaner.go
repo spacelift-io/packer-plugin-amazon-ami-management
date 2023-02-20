@@ -75,9 +75,9 @@ func (c *Cleaner) RetrieveCandidateImages() ([]*ec2.Image, error) {
 	output, err := c.ec2conn.DescribeImages(&ec2.DescribeImagesInput{
 		Filters: []*ec2.Filter{
 			{
-				Name: aws.String("tag:Amazon_AMI_Management_Identifier"),
+				Name: aws.String(fmt.Sprintf("tag:%s", c.config.TagKey)),
 				Values: []*string{
-					aws.String(c.config.Identifier),
+					aws.String(c.config.TagValue),
 				},
 			},
 		},

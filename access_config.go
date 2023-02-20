@@ -103,7 +103,7 @@ func (c *AccessConfig) Session() (*session.Session, error) {
 	}
 
 	if err != nil {
-		return nil, fmt.Errorf("Error loading credentials for AWS Provider: %s", err)
+		return nil, fmt.Errorf("error loading credentials for AWS Provider: %s", err)
 	}
 
 	log.Printf("[INFO] AWS Auth provider used: %q", cp.ProviderName)
@@ -138,9 +138,9 @@ func (c *AccessConfig) GetCredentials(config *aws.Config) (*awsCredentials.Crede
 }
 
 // IsAWSErr returns true if the error matches all these conditions:
-//  * err is of type awserr.Error
-//  * Error.Code() matches code
-//  * Error.Message() contains message
+//   - err is of type awserr.Error
+//   - Error.Code() matches code
+//   - Error.Message() contains message
 func IsAWSErr(err error, code string, message string) bool {
 	if err, ok := err.(awserr.Error); ok {
 		return err.Code() == code && strings.Contains(err.Message(), message)
@@ -151,7 +151,7 @@ func IsAWSErr(err error, code string, message string) bool {
 // NewNoValidCredentialSourcesError returns user-friendly errors for authentication failed.
 func (c *AccessConfig) NewNoValidCredentialSourcesError(err error) error {
 	return fmt.Errorf("No valid credential sources found for amazon-ami-management post processor. "+
-		"Please see https://github.com/wata727/packer-plugin-amazon-ami-management "+
+		"Please see https://github.com/spacelift-io/packer-plugin-amazon-ami-management "+
 		"for more information on providing credentials for the post processor. "+
 		"Error: %w", err)
 }

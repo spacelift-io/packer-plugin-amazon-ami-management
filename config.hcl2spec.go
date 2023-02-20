@@ -64,7 +64,8 @@ type FlatConfig struct {
 	SkipMetadataAPICheck *bool                 `mapstructure:"skip_metadata_api_check" cty:"skip_metadata_api_check" hcl:"skip_metadata_api_check"`
 	Token                *string               `mapstructure:"token" cty:"token" hcl:"token"`
 	SkipValidation       *bool                 `mapstructure:"skip_region_validation" cty:"skip_region_validation" hcl:"skip_region_validation"`
-	Identifier           *string               `mapstructure:"identifier" cty:"identifier" hcl:"identifier"`
+	TagKey               *string               `mapstructure:"tag_key" cty:"tag_key" hcl:"tag_key"`
+	TagValue             *string               `mapstructure:"tag_value" cty:"tag_value" hcl:"tag_value"`
 	KeepReleases         *int                  `mapstructure:"keep_releases" cty:"keep_releases" hcl:"keep_releases"`
 	KeepDays             *int                  `mapstructure:"keep_days" cty:"keep_days" hcl:"keep_days"`
 	Regions              []string              `mapstructure:"regions" cty:"regions" hcl:"regions"`
@@ -100,7 +101,8 @@ func (*FlatConfig) HCL2Spec() map[string]hcldec.Spec {
 		"skip_metadata_api_check":    &hcldec.AttrSpec{Name: "skip_metadata_api_check", Type: cty.Bool, Required: false},
 		"token":                      &hcldec.AttrSpec{Name: "token", Type: cty.String, Required: false},
 		"skip_region_validation":     &hcldec.AttrSpec{Name: "skip_region_validation", Type: cty.Bool, Required: false},
-		"identifier":                 &hcldec.AttrSpec{Name: "identifier", Type: cty.String, Required: false},
+		"tag_key":                    &hcldec.AttrSpec{Name: "tag_key", Type: cty.String, Required: false},
+		"tag_value":                  &hcldec.AttrSpec{Name: "tag_value", Type: cty.String, Required: false},
 		"keep_releases":              &hcldec.AttrSpec{Name: "keep_releases", Type: cty.Number, Required: false},
 		"keep_days":                  &hcldec.AttrSpec{Name: "keep_days", Type: cty.Number, Required: false},
 		"regions":                    &hcldec.AttrSpec{Name: "regions", Type: cty.List(cty.String), Required: false},

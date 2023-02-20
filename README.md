@@ -16,7 +16,7 @@ packer {
   required_plugins {
     amazon-ami-management = {
       version = ">= 1.0.0"
-      source = "github.com/wata727/amazon-ami-management"
+      source = "github.com/spacelift-io/amazon-ami-management"
     }
   }
 }
@@ -35,9 +35,6 @@ source "amazon-ebs" "example" {
   ssh_username = "ec2-user"
   ssh_pty = true
   ami_name = "packer-example ${formatdate("YYYYMMDDhhmmss", timestamp())}"
-  tags = {
-    Amazon_AMI_Management_Identifier = "packer-example"
-  }
 }
 
 build {
@@ -49,7 +46,8 @@ build {
 
   post-processor "amazon-ami-management" {
     regions = ["us-east-1"]
-    identifier = "packer-example"
+    tag_key = "Amazon_AMI_Management_Identifier"
+    tag_value = "packer-example"
     keep_releases = 3
   }
 }
@@ -60,7 +58,8 @@ build {
 Type: `amazon-ami-management`
 
 Required:
-  - `identifier` (string) - An identifier of AMIs. This plugin looks `Amazon_AMI_Management_Identifier` tag. If `identifier` matches tag value, these AMI becomes to management target.
+  - `tag_key` (string) - The key of the tag to identify AMIs. This tag is used to identify AMIs to be managed by this post-processor.
+  - `tag_value` (string) - The value of the tag to identify AMIs. This tag is used to identify AMIs to be managed by this post-processor.
   - `keep_releases` (integer) - The number of AMIs. This value is invalid when `keep_days` is set.
   - `keep_days` (integer) - The number of days to keep AMIs. For example, if you specify `10`, AMIs created before 10 days will be deleted. This value is invalid when `keep_releases` is set.
   - `regions` (array of strings) - A list of regions, such as `us-east-1` in which to manage AMIs. **NOTE:** Before v0.3.0, this parameter was `region`. Since 0.4.0, `region` is not used.
